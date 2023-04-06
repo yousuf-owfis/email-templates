@@ -38,11 +38,7 @@
       <!-- End of LHS section -->
 
       <!-- Start of RHS section which have input fields and body-->
-      <CollectionAdd
-        v-if="addTemplate"
-        @save="save"
-        @cancel="cancel"
-      />
+      <CollectionAdd v-if="addTemplate" @save="save" @cancel="cancel" />
       <CollectionEdit
         v-show="editTemplate && templates.length"
         :key="render"
@@ -100,9 +96,9 @@ const props = defineProps({
   },
 });
 
-const addTemplate = ref(false);
-const editTemplate = ref(false);
-const currentTemplate = ref({});
+const addTemplate: any = ref(false);
+const editTemplate: any = ref(false);
+const currentTemplate: any = ref({});
 const render = ref(0);
 
 // Authorization token
@@ -122,7 +118,7 @@ const { pending, data: templates } = await useLazyFetch(
 
 onMounted(() => {
   if (templates.value.length > 0) {
-    editTemplate.value = true
+    editTemplate.value = true;
     currentTemplate.value = templates.value[0];
   }
 });
@@ -136,12 +132,12 @@ const add = () => {
 const cancel = () => {
   addTemplate.value = false;
   editTemplate.value = true;
-}
+};
 
 // Assign selected template value to current template
 const select = (template: object) => {
   addTemplate.value = false;
-  editTemplate.value = true
+  editTemplate.value = true;
   currentTemplate.value = template;
 };
 
@@ -159,14 +155,13 @@ const save = async (template: any) => {
   });
 
   // Post call hits when click on save button
-  await useLazyFetch(props.url, {
+  const { data: response } = await useLazyFetch(props.url, {
     method: "POST",
     headers: authHeader,
     body: postData.value,
   });
 
-  templates.value.unshift(postData.value);
-  render.value++;
+  templates.value.unshift(response.value);
 };
 
 // Update templates data
@@ -202,7 +197,7 @@ const edit = async (template: any) => {
 };
 
 // Delete template based on uid
-const deleteItem = (uid: string) => {  
+const deleteItem = (uid: string) => {
   const { data: response } = useLazyFetch(`${props.url}${uid}`, {
     method: "DELETE",
     headers: authHeader,

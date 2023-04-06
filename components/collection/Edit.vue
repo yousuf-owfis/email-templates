@@ -37,6 +37,7 @@
           rows="4"
           class="p-4 mt-4 h-[calc(100vh-350px)] block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-300 sm:py-1.5 sm:text-sm sm:leading-6"
           placeholder="Add Template Body..."
+          required
         />
         <!-- End of template body -->
       </div>
@@ -90,13 +91,7 @@ watch(
 
 // Save the data when click on update or save
 const update = () => {
-  if (
-    form.value.name &&
-    form.value.subject &&
-    form.value.body
-  ) {
-    emit("edit", form.value);
-  }
+  emit("edit", form.value);
 };
 
 // Show previous template when click on cancel
