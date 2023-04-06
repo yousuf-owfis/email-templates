@@ -53,6 +53,7 @@
         :entity="entity"
         :is-active="isActive"
         @edit="edit"
+        @delete="deleteItem"
       />
       <p
         v-show="!templates.length && !addTemplate"
@@ -201,14 +202,14 @@ const edit = async (template: any) => {
 };
 
 // Delete template based on uid
-const deleteItem = (templateUid: string) => {
-  const { data: response } = useLazyFetch(`${props.url}${templateUid}`, {
+const deleteItem = (uid: string) => {  
+  const { data: response } = useLazyFetch(`${props.url}${uid}`, {
     method: "DELETE",
     headers: authHeader,
   });
   if (response) {
     const index = templates.value.findIndex(
-      (template: any) => template.uid === templateUid
+      (template: any) => template.uid === uid
     );
     if (index !== -1) {
       templates.value.splice(index, 1);
